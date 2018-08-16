@@ -1,0 +1,42 @@
+{
+  "name": "mesero",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:test": "babel ./test/test.js --out-file ./test/index.js",
+    "test": "tsc && npm run build:test && cd test && NODE_ENV=test node ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meserojs/mesero.git"
+  },
+  "author": "lijialiang@yy.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meserojs/mesero/issues"
+  },
+  "homepage": "https://github.com/meserojs/mesero#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "glob": "^7.1.2",
+    "koa": "^2.5.2",
+    "lodash": "^4.17.10",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.0.0-rc.1",
+    "@babel/core": "7.0.0-rc.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-rc.1",
+    "@babel/plugin-proposal-decorators": "^7.0.0-rc.1",
+    "@babel/plugin-transform-runtime": "7.0.0-rc.1",
+    "@babel/preset-env": "7.0.0-rc.1",
+    "@babel/runtime-corejs2": "^7.0.0-rc.1",
+    "@types/node": "^10.7.1",
+    "@types/fs-extra": "^5.0.4",
+    "@types/glob": "^5.0.35",
+    "@types/lodash": "^4.14.116",
+    "@types/yamljs": "^0.2.30"
+  }
+}
