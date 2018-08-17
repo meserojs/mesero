@@ -40,3 +40,7 @@ interface MeseroConfig {
   jwt?: JWTConfig
   dir: dirConfig
 }
+
+interface MeseroEnvConfig {
+  [env: string]: object
+}

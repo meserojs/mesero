@@ -1,4 +1,4 @@
-import { queue } from './../controller';
+import { queue } from './../controller'
 export default class Factory<T extends decoratorType> {
   public attr: T
 
@@ -7,16 +7,18 @@ export default class Factory<T extends decoratorType> {
   }
 
   public createSettings (callback: void | decoratorFunction<T>, isInPrototype?: boolean): decoratorFunction<T>
-  public createSettings (callback, isInPrototype = false) {
-    return (Target, key, descriptor) => {
+  public createSettings (callback: void | decoratorFunction<T>, isInPrototype = false) {
+    const setSettingsInit: decoratorFunction<T> = (Target, key, descriptor) => {
       const subject = isInPrototype ? Target.prototype : Target
 
       typeof subject.__settings__ === 'undefined' && (subject.__settings__ = this.attr)
 
       subject.__settings__.class = Target
 
-      return callback && callback(Target, key, descriptor)
+      return (callback && callback(Target, key, descriptor)) || Target
     }
+
+    return setSettingsInit
   }
 
   public createSettingsInPrototype (callback: void | decoratorFunction<T>): decoratorFunction<T> {
@@ -41,4 +43,3 @@ export default class Factory<T extends decoratorType> {
     }
   }
 }
-

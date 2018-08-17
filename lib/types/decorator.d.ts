@@ -1,5 +1,6 @@
 interface Target<T> {
   (): void
+  [attr: string]: any
   prototype: {
     __settings__: T
   }
@@ -17,9 +18,11 @@ interface decoratorType {
 interface ModelSettingsAttr extends decoratorType {
   table: string
   db: string
-  field: object
-  sql: Array<(...args) => any>
-  method: Array<(...args) => any>
+  field: {
+    [key: string]: object
+  }
+  sql: Array<(...args: any[]) => any>
+  method: Array<(...args: any[]) => any>
   // TODO: AfterDefineCallback & AfterDefine
 }
 
@@ -38,8 +41,8 @@ interface Controller extends decoratorFunction<ControllerSettingsAttr> {
 }
 
 interface InterceptorSettingsAttr extends decoratorType {
-  serverBeforeStart: Array<(...args) => any>
-  serverStarted: Array<(...args) => any>
+  serverBeforeStart: Array<(...args: any[]) => any>
+  serverStarted: Array<(...args: any[]) => any>
 }
 
 interface Interceptor extends decoratorFunction<InterceptorSettingsAttr> {

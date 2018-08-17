@@ -21,12 +21,13 @@ var Factory = /** @class */ (function () {
     Factory.prototype.createSettings = function (callback, isInPrototype) {
         var _this = this;
         if (isInPrototype === void 0) { isInPrototype = false; }
-        return function (Target, key, descriptor) {
+        var setSettingsInit = function (Target, key, descriptor) {
             var subject = isInPrototype ? Target.prototype : Target;
             typeof subject.__settings__ === 'undefined' && (subject.__settings__ = _this.attr);
             subject.__settings__.class = Target;
-            return callback && callback(Target, key, descriptor);
+            return (callback && callback(Target, key, descriptor)) || Target;
         };
+        return setSettingsInit;
     };
     Factory.prototype.createSettingsInPrototype = function (callback) {
         return this.createSettings(callback, true);

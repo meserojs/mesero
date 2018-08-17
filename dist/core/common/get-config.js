@@ -14,24 +14,22 @@ function default_1() {
         dir: {
             log: './log',
             static: './static',
-            view: './view',
+            view: './view'
         }
     };
     // base config
     var CONFIG_YML_NAME = 'mesero.yml';
     var CONFIG_YML_PATH = path.resolve(rootDir, CONFIG_YML_NAME);
-    var ymlConfig = {};
-    if (fs.existsSync(CONFIG_YML_PATH)) {
-        ymlConfig = YAML.parse(fs.readFileSync(CONFIG_YML_PATH, 'utf8')) || {};
-    }
+    var ymlConfig = fs.existsSync(CONFIG_YML_PATH) && (YAML.parse(fs.readFileSync(CONFIG_YML_PATH, 'utf8')) || {});
     // env config
     var envConfig = {};
-    console.log(process.env.NODE_ENV);
     var envConfigYmlFiles = glob.sync(path.resolve(rootDir, 'mesero.*.yml'));
     for (var _i = 0, envConfigYmlFiles_1 = envConfigYmlFiles; _i < envConfigYmlFiles_1.length; _i++) {
         var item = envConfigYmlFiles_1[_i];
-        var name_1 = /mesero\.(\S+)\.yml/.exec(item);
-        name_1 && (name_1 = name_1[1]) && (envConfig[name_1] = YAML.parse(fs.readFileSync(item, 'utf8')) || {});
+        var nameMatchArray = /mesero\.(\S+)\.yml/.exec(item);
+        if (nameMatchArray && nameMatchArray[1]) {
+            envConfig[nameMatchArray[1]] = YAML.parse(fs.readFileSync(item, 'utf8')) || {};
+        }
     }
     // merge base config
     config = _.merge(config, ymlConfig);

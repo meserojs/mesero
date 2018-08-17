@@ -14,7 +14,7 @@ export default function (): MeseroConfig {
     dir: {
       log: './log',
       static: './static',
-      view: './view',
+      view: './view'
     }
   }
 
@@ -25,15 +25,16 @@ export default function (): MeseroConfig {
   let ymlConfig: object = fs.existsSync(CONFIG_YML_PATH) && (YAML.parse(fs.readFileSync(CONFIG_YML_PATH, 'utf8')) || {})
 
   // env config
-  let envConfig: object = {}
-
-  console.log(process.env.NODE_ENV)
+  let envConfig: MeseroEnvConfig = {}
 
   const envConfigYmlFiles: Array<string> = glob.sync(path.resolve(rootDir, 'mesero.*.yml'))
 
   for (let item of envConfigYmlFiles) {
-    let name: RegExpExecArray | null | string = /mesero\.(\S+)\.yml/.exec(item)
-    name && (name = name[1]) && (envConfig[name] = YAML.parse(fs.readFileSync(item, 'utf8')) || {})
+    const nameMatchArray: RegExpExecArray | null = /mesero\.(\S+)\.yml/.exec(item)
+
+    if (nameMatchArray && nameMatchArray[1]) {
+      envConfig[nameMatchArray[1]] = YAML.parse(fs.readFileSync(item, 'utf8')) || {}
+    }
   }
 
   // merge base config

@@ -2,6 +2,11 @@
 
 module.exports = {
   parser: 'typescript-eslint-parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: false
+    }
+  },
   extends: [
     'standard'
   ],
@@ -13,6 +18,8 @@ module.exports = {
     'no-undef': 'off',
     'no-unused-vars': 'off',
     'space-infix-ops': 'off',
-    'strict': 'off'
+    'strict': 'off',
+    'no-dupe-class-members': 'off',
+    'no-use-before-define': 'off'
   }
 }
