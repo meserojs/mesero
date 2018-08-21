@@ -1,6 +1,6 @@
 interface SessionConfig {
-  name: string
-  time: number
+  key: string
+  maxAge: number
 }
 
 interface MySQLConfig {

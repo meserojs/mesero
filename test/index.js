@@ -123,6 +123,9 @@ router.get('/jwt/sign/:code', async function (ctx, next) {
 router.get('/jwt/verify/:token', async function (ctx, next) {
   ctx.body = ctx.jwt.verify(ctx.params.token);
 });
+router.get('/session', async function (ctx, next) {
+  !ctx.session.code && (ctx.session.code = 0);
+  ctx.body = ++ctx.session.code;
+});
 const mesero = new Mesero();
-console.log(mesero.util);
 mesero.start();

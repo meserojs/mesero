@@ -4,6 +4,9 @@ port: 2222
 crossDomain:
   headers: token
 
+session:
+  key: test
+
 jwt:
   key: test
   maxAge: 10000

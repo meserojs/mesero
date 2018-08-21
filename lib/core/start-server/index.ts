@@ -3,6 +3,7 @@ import * as Koa from 'koa'
 import * as KoaBody from 'koa-body'
 import * as KoaStatic from 'koa-static'
 import * as KoaViews from 'koa-views'
+import * as KoaSession from 'koa-session'
 
 import serverBeforeStart from './server-before-start'
 import serverStarted from './server-started'
@@ -27,7 +28,9 @@ export default async function ({
 }: StartServerArguments): Promise<any> {
   await serverBeforeStart(config, interceptor)
 
-  new Koa()
+  const app = new Koa()
+
+  app
     .use(async (ctx: any, next) => {
       ctx.model = model
       ctx.controller = controller
@@ -50,7 +53,7 @@ export default async function ({
       }
 
       ctx.error = function (msg: string) {
-        /* eslint-disable no-throw-literal */
+      /* eslint-disable no-throw-literal */
         throw `${CTX_ERROR_FLAG}${msg}`
       }
 
@@ -65,8 +68,18 @@ export default async function ({
       }
     })
     .on('error', (error: any) => {
-      logger.error(error)
+      console.log(error) && logger.error(error)
     })
+
+  if (config.session) {
+    const key: string = config.session.key || 'mesero'
+
+    app.keys = [key]
+
+    app.use(KoaSession({key, maxAge: config.session.maxAge || 24 * 60 * 60 * 1000}, app))
+  }
+
+  app
     .use(KoaStatic(config.dir.static))
     .use(KoaViews(config.dir.view, {extension: 'ejs'}))
     .use(KoaBody())

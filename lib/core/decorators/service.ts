@@ -1,4 +1,4 @@
-import Factory from '../common/decorator-factory'
+import Factory from './@factory'
 
 export const queue: DecoratorQueue<ServiceSettingsAttr> = []
 

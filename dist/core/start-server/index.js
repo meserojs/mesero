@@ -12,13 +12,15 @@ const Koa = require("koa");
 const KoaBody = require("koa-body");
 const KoaStatic = require("koa-static");
 const KoaViews = require("koa-views");
+const KoaSession = require("koa-session");
 const server_before_start_1 = require("./server-before-start");
 const server_started_1 = require("./server-started");
 const CTX_ERROR_FLAG = '[ctx@error]';
 function default_1({ config, model, controller, service, interceptor, router, logger, store, jwt, util }) {
     return __awaiter(this, void 0, void 0, function* () {
         yield server_before_start_1.default(config, interceptor);
-        new Koa()
+        const app = new Koa();
+        app
             .use((ctx, next) => __awaiter(this, void 0, void 0, function* () {
             ctx.model = model;
             ctx.controller = controller;
@@ -53,8 +55,14 @@ function default_1({ config, model, controller, service, interceptor, router, lo
             }
         }))
             .on('error', (error) => {
-            logger.error(error);
-        })
+            console.log(error) && logger.error(error);
+        });
+        if (config.session) {
+            const key = config.session.key || 'mesero';
+            app.keys = [key];
+            app.use(KoaSession({ key, maxAge: config.session.maxAge || 24 * 60 * 60 * 1000 }, app));
+        }
+        app
             .use(KoaStatic(config.dir.static))
             .use(KoaViews(config.dir.view, { extension: 'ejs' }))
             .use(KoaBody())
