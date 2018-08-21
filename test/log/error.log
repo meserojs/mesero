@@ -1,3 +1,0 @@
-[2018-08-21 15:45:29][error]: error.indexOf is not a function
-[2018-08-21 15:45:32][error]: error.indexOf is not a function
-[2018-08-21 15:46:37][error]: ENOENT: no such file or directory, stat 'view/a.ejs'
