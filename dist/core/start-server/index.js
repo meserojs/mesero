@@ -8,6 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const http = require("http");
+const socketIO = require("socket.io");
 const Koa = require("koa");
 const KoaBody = require("koa-body");
 const KoaStatic = require("koa-static");
@@ -20,6 +22,7 @@ function default_1({ config, model, controller, service, interceptor, router, lo
     return __awaiter(this, void 0, void 0, function* () {
         yield server_before_start_1.default(config, interceptor);
         const app = new Koa();
+        let io = void 0;
         app
             .use((ctx, next) => __awaiter(this, void 0, void 0, function* () {
             ctx.model = model;
@@ -29,6 +32,7 @@ function default_1({ config, model, controller, service, interceptor, router, lo
             ctx.store = store;
             ctx.jwt = jwt;
             ctx.util = util;
+            ctx.io = io;
             if (config.crossDomain) {
                 ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*');
                 ctx.set('Access-Control-Allow-Headers', config.crossDomain.headers || 'Content-Type, Content-Length');
@@ -67,8 +71,15 @@ function default_1({ config, model, controller, service, interceptor, router, lo
             .use(KoaViews(config.dir.view, { extension: 'ejs' }))
             .use(KoaBody())
             .use(router.routes())
-            .use(router.allowedMethods())
-            .listen(config.port, server_started_1.default(config, interceptor));
+            .use(router.allowedMethods());
+        if (config.isUseSocketIO) {
+            const server = http.createServer(app.callback());
+            io = socketIO(server);
+            server.listen(config.port, server_started_1.default(config, interceptor));
+        }
+        else {
+            app.listen(config.port, server_started_1.default(config, interceptor));
+        }
     });
 }
 exports.default = default_1;

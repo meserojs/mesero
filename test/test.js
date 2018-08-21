@@ -105,6 +105,10 @@ router.get('/session', async function (ctx, next) {
   ctx.body = ++ctx.session.code
 })
 
+router.get('/io', async function (ctx, next) {
+  ctx.body = !!ctx.io
+})
+
 const mesero = new Mesero()
 
 mesero.start()

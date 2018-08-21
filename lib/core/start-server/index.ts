@@ -1,4 +1,6 @@
 import * as path from 'path'
+import * as http from 'http'
+import * as socketIO from 'socket.io'
 import * as Koa from 'koa'
 import * as KoaBody from 'koa-body'
 import * as KoaStatic from 'koa-static'
@@ -30,6 +32,8 @@ export default async function ({
 
   const app = new Koa()
 
+  let io: any = void 0
+
   app
     .use(async (ctx: any, next) => {
       ctx.model = model
@@ -39,6 +43,7 @@ export default async function ({
       ctx.store = store
       ctx.jwt = jwt
       ctx.util = util
+      ctx.io = io
 
       if (config.crossDomain) {
         ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*')
@@ -85,5 +90,12 @@ export default async function ({
     .use(KoaBody())
     .use(router.routes())
     .use(router.allowedMethods())
-    .listen(config.port, serverStarted(config, interceptor))
+
+  if (config.isUseSocketIO) {
+    const server = http.createServer(app.callback())
+    io = socketIO(server)
+    server.listen(config.port, serverStarted(config, interceptor))
+  } else {
+    app.listen(config.port, serverStarted(config, interceptor))
+  }
 }

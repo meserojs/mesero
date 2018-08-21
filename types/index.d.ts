@@ -34,7 +34,7 @@ interface MeseroConfig {
   rootDir: string
   port: number
   env: string
-  isUseIO?: boolean
+  isUseSocketIO?: boolean
   session?: SessionConfig
   mysql?: MySQLConfig | Array<MySQLConfig>
   crossDomain?: CrossDomainConfig
