@@ -3,8 +3,9 @@ import * as Koa from 'koa'
 import * as KoaBody from 'koa-body'
 import * as KoaStatic from 'koa-static'
 import * as KoaViews from 'koa-views'
-import chalk from 'chalk'
-import boxen = require('boxen')
+
+import serverBeforeStart from './server-before-start'
+import serverStarted from './server-started'
 
 interface StartServerArguments {
   config: MeseroConfig
@@ -14,39 +15,15 @@ interface StartServerArguments {
   interceptor: Interceptor
   logger: Logger
   router: any
+  store: object
 }
 
 const CTX_ERROR_FLAG = '[ctx@error]'
 
-export default async function ({config, model, controller, service, interceptor, router, logger}: StartServerArguments): Promise<any> {
-  const { serverBeforeStart, serverStarted } = interceptor
-
-  const beforeServerStart = async () => {
-    for (let serverBeforeStartItemFunc of serverBeforeStart) {
-      await serverBeforeStartItemFunc()
-    }
-  }
-
-  const afterServerStarted = async () => {
-    console.log(
-      boxen(
-        chalk.yellow(
-          `ENV: ${config.env}\nPort: ${config.port}\n${config.mysql ? `MySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`
-        ),
-        {
-          padding: {left: 1, right: 1},
-          borderStyle: 'double',
-          borderColor: 'yellow'
-        }
-      )
-    )
-
-    for (let serverStartedItemFunc of serverStarted) {
-      await serverStartedItemFunc()
-    }
-  }
-
-  await beforeServerStart()
+export default async function ({
+  config, model, controller, service, interceptor, router, logger, store
+}: StartServerArguments): Promise<any> {
+  await serverBeforeStart(config, interceptor)
 
   new Koa()
     .use(async (ctx: any, next) => {
@@ -54,6 +31,7 @@ export default async function ({config, model, controller, service, interceptor,
       ctx.controller = controller
       ctx.service = service
       ctx.logger = logger
+      ctx.store = store
 
       if (config.crossDomain) {
         ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*')
@@ -90,5 +68,5 @@ export default async function ({config, model, controller, service, interceptor,
     .use(KoaBody())
     .use(router.routes())
     .use(router.allowedMethods())
-    .listen(config.port, afterServerStarted)
+    .listen(config.port, serverStarted(config, interceptor))
 }

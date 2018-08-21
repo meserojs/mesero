@@ -12,34 +12,19 @@ const Koa = require("koa");
 const KoaBody = require("koa-body");
 const KoaStatic = require("koa-static");
 const KoaViews = require("koa-views");
-const chalk_1 = require("chalk");
-const boxen = require("boxen");
+const server_before_start_1 = require("./server-before-start");
+const server_started_1 = require("./server-started");
 const CTX_ERROR_FLAG = '[ctx@error]';
-function default_1({ config, model, controller, service, interceptor, router, logger }) {
+function default_1({ config, model, controller, service, interceptor, router, logger, store }) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { serverBeforeStart, serverStarted } = interceptor;
-        const beforeServerStart = () => __awaiter(this, void 0, void 0, function* () {
-            for (let serverBeforeStartItemFunc of serverBeforeStart) {
-                yield serverBeforeStartItemFunc();
-            }
-        });
-        const afterServerStarted = () => __awaiter(this, void 0, void 0, function* () {
-            console.log(boxen(chalk_1.default.yellow(`ENV: ${config.env}\nPort: ${config.port}\n${config.mysql ? `MySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`), {
-                padding: { left: 1, right: 1 },
-                borderStyle: 'double',
-                borderColor: 'yellow'
-            }));
-            for (let serverStartedItemFunc of serverStarted) {
-                yield serverStartedItemFunc();
-            }
-        });
-        yield beforeServerStart();
+        yield server_before_start_1.default(config, interceptor);
         new Koa()
             .use((ctx, next) => __awaiter(this, void 0, void 0, function* () {
             ctx.model = model;
             ctx.controller = controller;
             ctx.service = service;
             ctx.logger = logger;
+            ctx.store = store;
             if (config.crossDomain) {
                 ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*');
                 ctx.set('Access-Control-Allow-Headers', config.crossDomain.headers || 'Content-Type, Content-Length');
@@ -73,7 +58,7 @@ function default_1({ config, model, controller, service, interceptor, router, lo
             .use(KoaBody())
             .use(router.routes())
             .use(router.allowedMethods())
-            .listen(config.port, afterServerStarted);
+            .listen(config.port, server_started_1.default(config, interceptor));
     });
 }
 exports.default = default_1;

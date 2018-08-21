@@ -87,6 +87,11 @@ router.get('/ejs', async function (ctx, next) {
   await ctx.render('a', {msg: ctx.controller.C.sayHello()})
 })
 
+router.get('/store', async function (ctx, next) {
+  !ctx.store.code && (ctx.store.code = 0)
+  ctx.body = ++ctx.store.code
+})
+
 const mesero = new Mesero()
 
 mesero.start()

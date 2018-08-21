@@ -10,6 +10,7 @@ export default class Mesero {
   public controller: Controller
   public service: Service
   public interceptor: Interceptor
+  public store: object = {}
 
   constructor () {
     this.config = getConfig()
@@ -31,7 +32,8 @@ export default class Mesero {
       service: this.service,
       interceptor: this.interceptor,
       logger: this.logger,
-      router
+      router,
+      store: this.store
     })
   }
 }
