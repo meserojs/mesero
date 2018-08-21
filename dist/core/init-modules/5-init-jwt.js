@@ -16,7 +16,7 @@ function default_1(config) {
             const decoded = jwt.verify(token, key);
             return decoded.data;
         }
-        catch (e) {
+        catch (err) {
             return undefined;
         }
     };

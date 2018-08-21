@@ -4,9 +4,11 @@ const get_config_1 = require("./common/get-config");
 const init_modules_1 = require("./init-modules");
 const start_server_1 = require("./start-server");
 const router_1 = require("./common/router");
+const util_1 = require("./common/util");
 class Mesero {
     constructor() {
         this.store = {};
+        this.util = util_1.default;
         this.config = get_config_1.default();
         const { logger, model, controller, service, interceptor, jwt } = init_modules_1.default(this.config);
         this.logger = logger;
@@ -26,7 +28,8 @@ class Mesero {
             logger: this.logger,
             router: router_1.default,
             store: this.store,
-            jwt: this.jwt
+            jwt: this.jwt,
+            util: this.util
         });
     }
 }

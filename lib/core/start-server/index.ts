@@ -15,14 +15,15 @@ interface StartServerArguments {
   interceptor: Interceptor
   logger: Logger
   router: any
-  store: object
   jwt?: JWT
+  store: object
+  util: object
 }
 
 const CTX_ERROR_FLAG = '[ctx@error]'
 
 export default async function ({
-  config, model, controller, service, interceptor, router, logger, store, jwt
+  config, model, controller, service, interceptor, router, logger, store, jwt, util
 }: StartServerArguments): Promise<any> {
   await serverBeforeStart(config, interceptor)
 
@@ -34,6 +35,7 @@ export default async function ({
       ctx.logger = logger
       ctx.store = store
       ctx.jwt = jwt
+      ctx.util = util
 
       if (config.crossDomain) {
         ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*')
