@@ -1,14 +1,13 @@
-import Factory from './common/decorator-factory'
+import Factory from '../common/decorator-factory'
 
-export const queue: Array<InterceptorSettingsAttr> = []
+export const queue: DecoratorQueue<InterceptorSettingsAttr> = []
 
 const decorator = new Factory<InterceptorSettingsAttr>({
-  class: null,
   serverBeforeStart: [],
   serverStarted: []
 })
 
-export const Interceptor: Interceptor = <Interceptor>decorator.entry(queue)
+export const Interceptor: InterceptorDecorator = <InterceptorDecorator>decorator.entry(queue)
 
 Interceptor.ServerBeforeStart = decorator.createSettings((Target, key, descriptor) => {
   Target.__settings__.serverBeforeStart.push(Target[key])

@@ -4,6 +4,7 @@ interface SessionConfig {
 }
 
 interface MySQLConfig {
+  DB?: string
   host: string
   prot: number
   name: string
@@ -43,4 +44,9 @@ interface MeseroConfig {
 
 interface MeseroEnvConfig {
   [env: string]: object
+}
+
+declare module 'boxen' {
+  function boxen (...args: Array<any>): string
+  export = boxen
 }

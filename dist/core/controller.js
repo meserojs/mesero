@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var decorator_factory_1 = require("./common/decorator-factory");
+const decorator_factory_1 = require("./common/decorator-factory");
 exports.queue = [];
-var decorator = new decorator_factory_1.default({
-    class: null
-});
+const decorator = new decorator_factory_1.default({});
 exports.Controller = decorator.entry(exports.queue);

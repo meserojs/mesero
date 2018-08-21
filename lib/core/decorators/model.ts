@@ -1,9 +1,8 @@
-import Factory from './common/decorator-factory'
+import Factory from '../common/decorator-factory'
 
-export const queue: Array<ModelSettingsAttr> = []
+export const queue: DecoratorQueue<ModelSettingsAttr> = []
 
 const decorator = new Factory<ModelSettingsAttr>({
-  class: null,
   db: '',
   table: '',
   field: {},
@@ -11,7 +10,7 @@ const decorator = new Factory<ModelSettingsAttr>({
   method: []
 })
 
-export const Model: Model = <Model>decorator.entry(queue)
+export const Model: ModelDecorator = <ModelDecorator>decorator.entry(queue)
 
 Model.DB = db => decorator.createSettingsInPrototype((Target, key, descriptor) => {
   Target.prototype.__settings__.db = db

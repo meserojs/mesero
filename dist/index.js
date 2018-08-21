@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var mesero_1 = require("./core/mesero");
-var model_1 = require("./core/model");
-var controller_1 = require("./core/controller");
-var interceptor_1 = require("./core/interceptor");
-var service_1 = require("./core/service");
+const mesero_1 = require("./core/mesero");
+const model_1 = require("./core/decorators/model");
+const controller_1 = require("./core/decorators/controller");
+const interceptor_1 = require("./core/decorators/interceptor");
+const service_1 = require("./core/decorators/service");
+const router_1 = require("./core/common/router");
 exports.default = {
     Mesero: mesero_1.default,
     Model: model_1.Model,
     Controller: controller_1.Controller,
     Interceptor: interceptor_1.Interceptor,
-    Service: service_1.Service
+    Service: service_1.Service,
+    router: router_1.default
 };

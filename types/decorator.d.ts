@@ -1,3 +1,7 @@
+interface DecoratorQueue<T> extends Array<any> {
+  [index: number]: Array<T>
+}
+
 interface Target<T> {
   (): void
   [attr: string]: any
@@ -12,21 +16,24 @@ interface decoratorFunction<T> {
 }
 
 interface decoratorType {
-  class: object | null
+  class?: object
 }
 
 interface ModelSettingsAttr extends decoratorType {
+  class?: {
+    name: string
+  }
   table: string
   db: string
   field: {
-    [key: string]: object
+    [key: string]: any
   }
   sql: Array<(...args: any[]) => any>
   method: Array<(...args: any[]) => any>
   // TODO: AfterDefineCallback & AfterDefine
 }
 
-interface Model extends decoratorFunction<ModelSettingsAttr> {
+interface ModelDecorator extends decoratorFunction<ModelSettingsAttr> {
   DB: (db: string) => decoratorFunction<ModelSettingsAttr>
   Table: (name: string) => decoratorFunction<ModelSettingsAttr>
   Field: (name: string, attr: object) => decoratorFunction<ModelSettingsAttr>
@@ -37,7 +44,7 @@ interface Model extends decoratorFunction<ModelSettingsAttr> {
 interface ControllerSettingsAttr extends decoratorType {
 }
 
-interface Controller extends decoratorFunction<ControllerSettingsAttr> {
+interface ControllerDecorator extends decoratorFunction<ControllerSettingsAttr> {
 }
 
 interface InterceptorSettingsAttr extends decoratorType {
@@ -45,7 +52,7 @@ interface InterceptorSettingsAttr extends decoratorType {
   serverStarted: Array<(...args: any[]) => any>
 }
 
-interface Interceptor extends decoratorFunction<InterceptorSettingsAttr> {
+interface InterceptorDecorator extends decoratorFunction<InterceptorSettingsAttr> {
   ServerBeforeStart: decoratorFunction<InterceptorSettingsAttr>
   ServerStarted: decoratorFunction<InterceptorSettingsAttr>
 }
@@ -53,5 +60,5 @@ interface Interceptor extends decoratorFunction<InterceptorSettingsAttr> {
 interface ServiceSettingsAttr extends decoratorType {
 }
 
-interface Service extends decoratorFunction<ServiceSettingsAttr> {
+interface ServiceDecorator extends decoratorFunction<ServiceSettingsAttr> {
 }

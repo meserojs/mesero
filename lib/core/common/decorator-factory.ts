@@ -1,4 +1,5 @@
-import { queue } from './../controller'
+import * as _ from 'lodash'
+
 export default class Factory<T extends decoratorType> {
   public attr: T
 
@@ -11,7 +12,7 @@ export default class Factory<T extends decoratorType> {
     const setSettingsInit: decoratorFunction<T> = (Target, key, descriptor) => {
       const subject = isInPrototype ? Target.prototype : Target
 
-      typeof subject.__settings__ === 'undefined' && (subject.__settings__ = this.attr)
+      typeof subject.__settings__ === 'undefined' && (subject.__settings__ = _.cloneDeep(this.attr))
 
       subject.__settings__.class = Target
 
@@ -25,7 +26,7 @@ export default class Factory<T extends decoratorType> {
     return this.createSettings(callback, true)
   }
 
-  public entry: (queue: Array<T>) => decoratorFunction<T> = (queue) => {
+  public entry: (queue: DecoratorQueue<T>) => decoratorFunction<T> = (queue) => {
     return (Target, key, descriptor) => {
       const setClass = (): Target<T> => {
         !Target.prototype.__settings__.class && (Target.prototype.__settings__.class = Target)

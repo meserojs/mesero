@@ -1,21 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var model_1 = require("./model");
-var controller_1 = require("./controller");
-var interceptor_1 = require("./interceptor");
-var service_1 = require("./service");
-var get_config_1 = require("./common/get-config");
-var Mesero = /** @class */ (function () {
-    function Mesero() {
-        console.log('model queue: ', model_1.queue);
-        console.log('controller queue: ', controller_1.queue);
-        console.log('interceptor queue: ', interceptor_1.queue);
-        console.log('service queue: ', service_1.queue);
+const get_config_1 = require("./common/get-config");
+const init_modules_1 = require("./init-modules");
+const start_server_1 = require("./start-server");
+const router_1 = require("./common/router");
+class Mesero {
+    constructor() {
         this.config = get_config_1.default();
-        console.log(this.config);
+        const { logger, model, controller, service, interceptor } = init_modules_1.default(this.config);
+        this.logger = logger;
+        this.model = model;
+        this.controller = controller;
+        this.service = service;
+        this.interceptor = interceptor;
     }
-    Mesero.prototype.start = function () {
-    };
-    return Mesero;
-}());
+    start() {
+        start_server_1.default({
+            config: this.config,
+            model: this.model,
+            controller: this.controller,
+            service: this.service,
+            interceptor: this.interceptor,
+            logger: this.logger,
+            router: router_1.default
+        });
+    }
+}
 exports.default = Mesero;

@@ -1,25 +1,37 @@
-import { queue as modelQueue } from './model'
-import { queue as controllerQueue } from './controller'
-import { queue as interceptorQueue } from './interceptor'
-import { queue as serviceQueue } from './service'
-
 import getConfig from './common/get-config'
+import initModules from './init-modules'
+import startServer from './start-server'
+import router from './common/router'
 
 export default class Mesero {
   public config: MeseroConfig
+  public logger: Logger
+  public model: Model
+  public controller: Controller
+  public service: Service
+  public interceptor: Interceptor
 
   constructor () {
-    console.log('model queue: ', modelQueue)
-    console.log('controller queue: ', controllerQueue)
-    console.log('interceptor queue: ', interceptorQueue)
-    console.log('service queue: ', serviceQueue)
-
     this.config = getConfig()
 
-    console.log(this.config)
+    const { logger, model, controller, service, interceptor } = initModules(this.config)
+
+    this.logger = logger
+    this.model = model
+    this.controller = controller
+    this.service = service
+    this.interceptor = interceptor
   }
 
   start (): void {
-
+    startServer({
+      config: this.config,
+      model: this.model,
+      controller: this.controller,
+      service: this.service,
+      interceptor: this.interceptor,
+      logger: this.logger,
+      router
+    })
   }
 }

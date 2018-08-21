@@ -6,7 +6,9 @@ var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-c
 
 var _applyDecoratedDescriptor2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/applyDecoratedDescriptor"));
 
-var _dec, _dec2, _class, _class2, _class3, _class4, _class5, _class6;
+var _dec, _dec2, _dec3, _class, _class2, _class3, _class4, _class5, _class6, _class7, _class8;
+
+const Sequelize = require('sequelize');
 
 const {
   default: {
@@ -14,7 +16,8 @@ const {
     Model,
     Controller,
     Interceptor,
-    Service
+    Service,
+    router
   }
 } = require('../dist');
 
@@ -24,20 +27,24 @@ const {
   SQL,
   Method
 } = Model;
-let A = (_dec = Table('A'), _dec2 = Field('id', String), Model(_class = _dec(_class = _dec2(_class = (_class2 = class A {
-  sql() {
-    return '';
+let M = (_dec = Table('user'), _dec2 = Field('id', {
+  type: Sequelize.INTEGER,
+  primaryKey: true,
+  autoIncrement: true
+}), _dec3 = Field('name', Sequelize.STRING), Model(_class = _dec(_class = _dec2(_class = _dec3(_class = (_class2 = class M {
+  findAll() {
+    return 'SELECT * FROM `user`';
   }
 
   sayHello() {
     console.log('hello !');
   }
 
-}, ((0, _applyDecoratedDescriptor2.default)(_class2.prototype, "sql", [SQL], (0, _getOwnPropertyDescriptor.default)(_class2.prototype, "sql"), _class2.prototype), (0, _applyDecoratedDescriptor2.default)(_class2.prototype, "sayHello", [Method], (0, _getOwnPropertyDescriptor.default)(_class2.prototype, "sayHello"), _class2.prototype)), _class2)) || _class) || _class) || _class);
+}, ((0, _applyDecoratedDescriptor2.default)(_class2.prototype, "findAll", [SQL], (0, _getOwnPropertyDescriptor.default)(_class2.prototype, "findAll"), _class2.prototype), (0, _applyDecoratedDescriptor2.default)(_class2.prototype, "sayHello", [Method], (0, _getOwnPropertyDescriptor.default)(_class2.prototype, "sayHello"), _class2.prototype)), _class2)) || _class) || _class) || _class) || _class);
 
 let C = Controller(_class3 = class C {
   sayHello() {
-    console.log('hello !');
+    return 'hello !';
   }
 
 }) || _class3;
@@ -47,26 +54,64 @@ const {
   ServerStarted
 } = Interceptor;
 
-let I = Interceptor(_class4 = (_class5 = class I {
+let I1 = Interceptor(_class4 = (_class5 = class I1 {
   sayHello1() {
-    console.log('hello1 !');
+    console.log('I1, hello1 !');
   }
 
   sayHello2() {
-    console.log('hello2 !');
+    console.log('I1, hello2 !');
   }
 
-  sayHello3() {
-    console.log('hello3 !');
+}, ((0, _applyDecoratedDescriptor2.default)(_class5.prototype, "sayHello1", [ServerBeforeStart], (0, _getOwnPropertyDescriptor.default)(_class5.prototype, "sayHello1"), _class5.prototype), (0, _applyDecoratedDescriptor2.default)(_class5.prototype, "sayHello2", [ServerStarted], (0, _getOwnPropertyDescriptor.default)(_class5.prototype, "sayHello2"), _class5.prototype)), _class5)) || _class4;
+
+;
+
+let I2 = Interceptor(_class6 = (_class7 = class I2 {
+  sayHello1() {
+    console.log('I2, hello1 !');
   }
 
-}, ((0, _applyDecoratedDescriptor2.default)(_class5.prototype, "sayHello1", [ServerBeforeStart], (0, _getOwnPropertyDescriptor.default)(_class5.prototype, "sayHello1"), _class5.prototype), (0, _applyDecoratedDescriptor2.default)(_class5.prototype, "sayHello2", [ServerBeforeStart], (0, _getOwnPropertyDescriptor.default)(_class5.prototype, "sayHello2"), _class5.prototype), (0, _applyDecoratedDescriptor2.default)(_class5.prototype, "sayHello3", [ServerStarted], (0, _getOwnPropertyDescriptor.default)(_class5.prototype, "sayHello3"), _class5.prototype)), _class5)) || _class4;
+  sayHello2() {
+    console.log('I2, hello2 !');
+  }
 
-let S = Service(_class6 = class S {
+}, ((0, _applyDecoratedDescriptor2.default)(_class7.prototype, "sayHello1", [ServerBeforeStart], (0, _getOwnPropertyDescriptor.default)(_class7.prototype, "sayHello1"), _class7.prototype), (0, _applyDecoratedDescriptor2.default)(_class7.prototype, "sayHello2", [ServerStarted], (0, _getOwnPropertyDescriptor.default)(_class7.prototype, "sayHello2"), _class7.prototype)), _class7)) || _class6;
+
+;
+
+let S = Service(_class8 = class S {
   sayHello() {
     console.log('hello !');
   }
 
-}) || _class6;
+}) || _class8;
 
-new Mesero();
+router.get('/', function (ctx, next) {
+  ctx.body = ctx.controller.C.sayHello();
+});
+router.all('/user/:id', async function (ctx, next) {
+  ctx.body = (await ctx.model.M.find({
+    where: {
+      id: ctx.params.id
+    }
+  })) || 'not found user';
+});
+router.post('/user', async function (ctx, next) {
+  ctx.body = (await ctx.model.M.find({
+    where: {
+      id: ctx.request.body.id
+    }
+  })) || 'not found user';
+});
+router.all('/error', function (ctx, next) {
+  ctx.error('test error message');
+  console.log('not run here');
+});
+router.get('/ejs', async function (ctx, next) {
+  await ctx.render('a', {
+    msg: ctx.controller.C.sayHello()
+  });
+});
+const mesero = new Mesero();
+mesero.start();
