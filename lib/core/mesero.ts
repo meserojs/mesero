@@ -11,17 +11,19 @@ export default class Mesero {
   public service: Service
   public interceptor: Interceptor
   public store: object = {}
+  public jwt?: JWT
 
   constructor () {
     this.config = getConfig()
 
-    const { logger, model, controller, service, interceptor } = initModules(this.config)
+    const { logger, model, controller, service, interceptor, jwt } = initModules(this.config)
 
     this.logger = logger
     this.model = model
     this.controller = controller
     this.service = service
     this.interceptor = interceptor
+    this.jwt = jwt
   }
 
   start (): void {
@@ -33,7 +35,8 @@ export default class Mesero {
       interceptor: this.interceptor,
       logger: this.logger,
       router,
-      store: this.store
+      store: this.store,
+      jwt: this.jwt
     })
   }
 }

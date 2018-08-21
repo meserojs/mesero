@@ -15,7 +15,7 @@ const KoaViews = require("koa-views");
 const server_before_start_1 = require("./server-before-start");
 const server_started_1 = require("./server-started");
 const CTX_ERROR_FLAG = '[ctx@error]';
-function default_1({ config, model, controller, service, interceptor, router, logger, store }) {
+function default_1({ config, model, controller, service, interceptor, router, logger, store, jwt }) {
     return __awaiter(this, void 0, void 0, function* () {
         yield server_before_start_1.default(config, interceptor);
         new Koa()
@@ -25,6 +25,7 @@ function default_1({ config, model, controller, service, interceptor, router, lo
             ctx.service = service;
             ctx.logger = logger;
             ctx.store = store;
+            ctx.jwt = jwt;
             if (config.crossDomain) {
                 ctx.set('Access-Control-Allow-Origin', config.crossDomain.origin || '*');
                 ctx.set('Access-Control-Allow-Headers', config.crossDomain.headers || 'Content-Type, Content-Length');

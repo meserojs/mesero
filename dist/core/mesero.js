@@ -8,12 +8,13 @@ class Mesero {
     constructor() {
         this.store = {};
         this.config = get_config_1.default();
-        const { logger, model, controller, service, interceptor } = init_modules_1.default(this.config);
+        const { logger, model, controller, service, interceptor, jwt } = init_modules_1.default(this.config);
         this.logger = logger;
         this.model = model;
         this.controller = controller;
         this.service = service;
         this.interceptor = interceptor;
+        this.jwt = jwt;
     }
     start() {
         start_server_1.default({
@@ -24,7 +25,8 @@ class Mesero {
             interceptor: this.interceptor,
             logger: this.logger,
             router: router_1.default,
-            store: this.store
+            store: this.store,
+            jwt: this.jwt
         });
     }
 }

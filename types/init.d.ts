@@ -15,10 +15,16 @@ interface Interceptor {
   serverStarted: Array<(...args: Array<any>) => any>
 }
 
+interface JWT {
+  sign: (data: any, time: number) => void
+  verify: (token: string) => any
+}
+
 interface initModules {
   logger: Logger
   model: Model
   controller: Controller
   service: Service
   interceptor: Interceptor
+  jwt?: JWT
 }

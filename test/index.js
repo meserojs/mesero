@@ -117,5 +117,11 @@ router.get('/store', async function (ctx, next) {
   !ctx.store.code && (ctx.store.code = 0);
   ctx.body = ++ctx.store.code;
 });
+router.get('/jwt/sign/:code', async function (ctx, next) {
+  ctx.body = ctx.jwt.sign(ctx.params.code);
+});
+router.get('/jwt/verify/:token', async function (ctx, next) {
+  ctx.body = ctx.jwt.verify(ctx.params.token);
+});
 const mesero = new Mesero();
 mesero.start();

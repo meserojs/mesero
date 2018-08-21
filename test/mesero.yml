@@ -4,6 +4,11 @@ port: 2222
 crossDomain:
   headers: token
 
+jwt:
+  key: test
+  maxAge: 10000
+  secret: null
+
 mysql:
   host: 172.27.205.21
   name: test
