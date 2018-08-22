@@ -51,3 +51,27 @@ interface ServerModules {
 interface MiddlewarePlugin {
   (app: any, config: ServerModules): ((ctx: any, next: any) => any) | void
 }
+
+declare class MiddlewareClass {
+  queue: Array<MiddlewarePlugin>
+  add: (func: MiddlewarePlugin) => void
+}
+
+interface MeseroConstructor {
+  new (): MeseroClass
+}
+
+interface MeseroClass {
+  config: MeseroConfig
+  start: () => void
+}
+
+interface mesero {
+  Mesero: MeseroConstructor
+  Model: ModelDecorator
+  Controller: ControllerDecorator
+  Interceptor: InterceptorDecorator
+  Service: ServiceDecorator
+  router: any
+  Middleware: MiddlewareClass
+}

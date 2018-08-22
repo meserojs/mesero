@@ -6,7 +6,7 @@ import { Service } from './core/decorators/service'
 import router from './core/common/router'
 import Middleware from './core/middleware'
 
-export default {
+const mesero: mesero = {
   Mesero,
   Model,
   Controller,
@@ -15,3 +15,5 @@ export default {
   router,
   Middleware
 }
+
+export default mesero

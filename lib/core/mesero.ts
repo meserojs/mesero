@@ -4,7 +4,7 @@ import startServer from './start-server'
 import router from './common/router'
 import util from './common/util'
 
-export default class Mesero {
+export default class Mesero implements MeseroClass {
   public config: MeseroConfig
   public logger: Logger
   public model: Model
@@ -29,7 +29,7 @@ export default class Mesero {
     this.jwt = jwt
   }
 
-  start (): void {
+  start () {
     startServer({
       config: this.config,
       model: this.model,
