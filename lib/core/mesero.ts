@@ -14,6 +14,7 @@ export default class Mesero {
   public jwt?: JWT
   public store: object = {}
   public util: object = util
+  public io?: any
 
   constructor () {
     this.config = getConfig()
@@ -39,7 +40,8 @@ export default class Mesero {
       router,
       store: this.store,
       jwt: this.jwt,
-      util: this.util
+      util: this.util,
+      io: this.io
     })
   }
 }

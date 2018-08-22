@@ -1,52 +1,53 @@
-interface SessionConfig {
-  key: string
-  maxAge: number
+interface Model {
+  [key: string]: any
 }
 
-interface MySQLConfig {
-  DB?: string
-  host: string
-  prot: number
-  name: string
-  username: string
-  password: string
+interface Controller {
+  [key: string]: object
 }
 
-interface CrossDomainConfig {
-  origin: string
-  headers: string
-  methods: string
+interface Service {
+  [key: string]: object
 }
 
-interface JWTConfig {
-  key: string
-  maxAge: string
-  secret: string
+interface Interceptor {
+  serverBeforeStart: Array<(...args: Array<any>) => any>
+  serverStarted: Array<(...args: Array<any>) => any>
 }
 
-interface dirConfig {
-  log: string
-  static: string
-  view: string
+interface JWT {
+  sign: (data: any, time: number) => void
+  verify: (token: string) => any
 }
 
-interface MeseroConfig {
-  rootDir: string
-  port: number
-  env: string
-  isUseSocketIO?: boolean
-  session?: SessionConfig
-  mysql?: MySQLConfig | Array<MySQLConfig>
-  crossDomain?: CrossDomainConfig
-  jwt?: JWTConfig
-  dir: dirConfig
-}
-
-interface MeseroEnvConfig {
-  [env: string]: object
+interface initModules {
+  logger: Logger
+  model: Model
+  controller: Controller
+  service: Service
+  interceptor: Interceptor
+  jwt?: JWT
 }
 
 declare module 'boxen' {
   function boxen (...args: Array<any>): string
   export = boxen
+}
+
+interface ServerModules {
+  config: MeseroConfig
+  model: Model
+  controller: Controller
+  service: Service
+  interceptor: Interceptor
+  logger: Logger
+  router: any
+  jwt?: JWT
+  store: object
+  util: object
+  io?: any
+}
+
+interface MiddlewarePlugin {
+  (app: any, config: ServerModules): ((ctx: any, next: any) => any) | void
 }

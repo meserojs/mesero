@@ -29,7 +29,8 @@ class Mesero {
             router: router_1.default,
             store: this.store,
             jwt: this.jwt,
-            util: this.util
+            util: this.util,
+            io: this.io
         });
     }
 }

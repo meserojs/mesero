@@ -8,12 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function default_1(modules) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { interceptor } = modules;
-        for (let item of interceptor.serverBeforeStart) {
-            yield item();
-        }
+const injectModules = function (app, modules) {
+    return (ctx, next) => __awaiter(this, void 0, void 0, function* () {
+        ctx.config = modules.config;
+        ctx.model = modules.model;
+        ctx.controller = modules.controller;
+        ctx.service = modules.service;
+        ctx.logger = modules.logger;
+        ctx.store = modules.store;
+        ctx.jwt = modules.jwt;
+        ctx.util = modules.util;
+        ctx.io = modules.io;
+        yield next();
     });
-}
-exports.default = default_1;
+};
+exports.default = injectModules;

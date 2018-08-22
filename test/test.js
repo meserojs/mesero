@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const { default: { Mesero, Model, Controller, Interceptor, Service, router } } = require('../dist')
+const { default: { Mesero, Model, Controller, Interceptor, Service, router, Middleware } } = require('../dist')
 
 const { Table, Field, SQL, Method } = Model
 
@@ -108,6 +108,13 @@ router.get('/session', async function (ctx, next) {
 router.get('/io', async function (ctx, next) {
   ctx.body = !!ctx.io
 })
+
+Middleware.add((app, config) => async (ctx, next) => {
+  console.log('middle ware 1')
+  await next()
+})
+
+Middleware.add((app, config) => console.log('middle ware 2'))
 
 const mesero = new Mesero()
 
