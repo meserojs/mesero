@@ -18,6 +18,11 @@ class M {
     return 'SELECT * FROM `user`'
   }
 
+  @SQL
+  findAllAndCount () {
+    return ['SELECT COUNT(*) AS count FROM `user`', 'SELECT * FROM `user`']
+  }
+
   @Method
   sayHello () {
     console.log('hello !')
@@ -76,6 +81,15 @@ router.all('/user/:id', async function (ctx, next) {
 
 router.post('/user', async function (ctx, next) {
   ctx.body = (await ctx.model.M.find({where: {id: ctx.request.body.id}})) || 'not found user'
+})
+
+router.get('/sql/1', async function (ctx, next) {
+  ctx.body = await ctx.model.M.SQL.findAll()
+})
+
+router.get('/sql/2', async function (ctx, next) {
+  const [ count, users ] = await Promise.all(ctx.model.M.SQL.findAllAndCount())
+  ctx.body = {count, users}
 })
 
 router.all('/error', function (ctx, next) {

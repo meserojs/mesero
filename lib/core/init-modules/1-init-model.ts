@@ -60,13 +60,21 @@ export default (config: MeseroConfig): Model => {
 
     for (let s of sql) {
       modelItem.SQL[s.name] = (...args: Array<any>) => {
-        const sqlStatement = s(...args)
+        let sqlStatement = s(...args)
 
-        if (sqlStatement.toUpperCase().indexOf('SELECT') === 0) {
-          return dbItem.query(sqlStatement, {type: dbItem.QueryTypes.SELECT})
+        const querySqlStatement = (item: string) => {
+          if (item.toUpperCase().indexOf('SELECT') === 0) {
+            return dbItem.query(item, {type: dbItem.QueryTypes.SELECT})
+          }
+
+          return dbItem.query(item)
         }
 
-        return dbItem.query(sqlStatement)
+        if (Array.isArray(sqlStatement)) {
+          return sqlStatement.map((item) => querySqlStatement(item))
+        } else {
+          return querySqlStatement(sqlStatement)
+        }
       }
     }
 

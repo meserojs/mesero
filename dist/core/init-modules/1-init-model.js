@@ -44,11 +44,19 @@ exports.default = (config) => {
         modelItem.SQL = {};
         for (let s of sql) {
             modelItem.SQL[s.name] = (...args) => {
-                const sqlStatement = s(...args);
-                if (sqlStatement.toUpperCase().indexOf('SELECT') === 0) {
-                    return dbItem.query(sqlStatement, { type: dbItem.QueryTypes.SELECT });
+                let sqlStatement = s(...args);
+                const querySqlStatement = (item) => {
+                    if (item.toUpperCase().indexOf('SELECT') === 0) {
+                        return dbItem.query(item, { type: dbItem.QueryTypes.SELECT });
+                    }
+                    return dbItem.query(item);
+                };
+                if (Array.isArray(sqlStatement)) {
+                    return sqlStatement.map((item) => querySqlStatement(item));
                 }
-                return dbItem.query(sqlStatement);
+                else {
+                    return querySqlStatement(sqlStatement);
+                }
             };
         }
         model[ClassObject.name] = modelItem;
