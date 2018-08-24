@@ -19,7 +19,7 @@ const middleware_1 = require("../middleware");
 const BODY_LIMIT_SIZE = 100000;
 function default_1(modules) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { config, router } = modules;
+        const { config } = modules;
         yield server_before_start_1.default(modules);
         const app = new Koa();
         middleware_1.default.queue.forEach((middlewareItem) => {
@@ -31,8 +31,8 @@ function default_1(modules) {
             .use(KoaStatic(config.dir.static))
             .use(KoaViews(config.dir.view, { extension: 'ejs' }))
             .use(KoaBody({ jsonLimit: BODY_LIMIT_SIZE, formLimit: BODY_LIMIT_SIZE, textLimit: BODY_LIMIT_SIZE }))
-            .use(router.routes())
-            .use(router.allowedMethods());
+            .use(modules.router.routes())
+            .use(modules.router.allowedMethods());
         yield server_start_1.default(app, modules);
         yield server_started_1.default(modules);
     });

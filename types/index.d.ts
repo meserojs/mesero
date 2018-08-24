@@ -41,11 +41,11 @@ interface ServerModules {
   service: Service
   interceptor: Interceptor
   logger: Logger
-  router: any
   jwt?: JWT
   store: object
   util: object
   io?: any
+  router: any
 }
 
 interface MiddlewarePlugin {
@@ -72,6 +72,6 @@ interface mesero {
   Controller: ControllerDecorator
   Interceptor: InterceptorDecorator
   Service: ServiceDecorator
-  router: any
+  Router: any
   Middleware: MiddlewareClass
 }

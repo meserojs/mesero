@@ -1,7 +1,6 @@
 import getConfig from './common/get-config'
 import initModules from './init-modules'
 import startServer from './start-server'
-import router from './common/router'
 import util from './common/util'
 
 export default class Mesero implements MeseroClass {
@@ -15,6 +14,7 @@ export default class Mesero implements MeseroClass {
   public store: object = {}
   public util: object = util
   public io?: any
+  public router: any
 
   constructor () {
     this.config = getConfig()
@@ -37,9 +37,9 @@ export default class Mesero implements MeseroClass {
       service: this.service,
       interceptor: this.interceptor,
       logger: this.logger,
-      router,
       store: this.store,
       jwt: this.jwt,
+      router: this.router,
       util: this.util,
       io: this.io
     })

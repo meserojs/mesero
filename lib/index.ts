@@ -3,7 +3,7 @@ import { Model } from './core/decorators/model'
 import { Controller } from './core/decorators/controller'
 import { Interceptor } from './core/decorators/interceptor'
 import { Service } from './core/decorators/service'
-import router from './core/common/router'
+import { Router } from './core/common/router'
 import Middleware from './core/middleware'
 
 const mesero: mesero = {
@@ -12,8 +12,10 @@ const mesero: mesero = {
   Controller,
   Interceptor,
   Service,
-  router,
-  Middleware
+  Middleware,
+  Router
 }
+
+console.log(module.parent && module.parent.filename)
 
 export = mesero

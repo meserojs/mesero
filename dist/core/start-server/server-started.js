@@ -13,7 +13,7 @@ const boxen = require("boxen");
 function default_1(modules) {
     return __awaiter(this, void 0, void 0, function* () {
         const { config, interceptor } = modules;
-        console.log(boxen(chalk_1.default.yellow(`ENV: ${config.env}\nPort: ${config.port}\n${config.mysql ? `MySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`), {
+        console.log(boxen(chalk_1.default.yellow(`ENV: ${config.env}\nPort: ${config.port}${config.mysql ? `\nMySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`), {
             padding: { left: 1, right: 1 },
             borderStyle: 'double',
             borderColor: 'yellow'

@@ -12,7 +12,8 @@ const mesero = {
     Controller: controller_1.Controller,
     Interceptor: interceptor_1.Interceptor,
     Service: service_1.Service,
-    router: router_1.default,
-    Middleware: middleware_1.default
+    Middleware: middleware_1.default,
+    Router: router_1.Router
 };
+console.log(module.parent && module.parent.filename);
 module.exports = mesero;

@@ -7,7 +7,7 @@ export default async function (modules: ServerModules): Promise<void> {
   console.log(
     boxen(
       chalk.yellow(
-        `ENV: ${config.env}\nPort: ${config.port}\n${config.mysql ? `MySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`
+        `ENV: ${config.env}\nPort: ${config.port}${config.mysql ? `\nMySQL: ${Array.isArray(config.mysql) ? config.mysql.map(v => `${v.host}@${v.name}`).join(',') : `${config.mysql.host}@${config.mysql.name}`}` : ''}`
       ),
       {
         padding: {left: 1, right: 1},

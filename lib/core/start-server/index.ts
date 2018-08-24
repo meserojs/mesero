@@ -11,7 +11,7 @@ import Middleware from '../middleware'
 const BODY_LIMIT_SIZE = 100000
 
 export default async function (modules: ServerModules): Promise<any> {
-  const { config, router } = modules
+  const { config } = modules
 
   await serverBeforeStart(modules)
 
@@ -27,8 +27,8 @@ export default async function (modules: ServerModules): Promise<any> {
     .use(KoaStatic(config.dir.static))
     .use(KoaViews(config.dir.view, {extension: 'ejs'}))
     .use(KoaBody({jsonLimit: BODY_LIMIT_SIZE, formLimit: BODY_LIMIT_SIZE, textLimit: BODY_LIMIT_SIZE}))
-    .use(router.routes())
-    .use(router.allowedMethods())
+    .use(modules.router.routes())
+    .use(modules.router.allowedMethods())
 
   await serverStart(app, modules)
   await serverStarted(modules)

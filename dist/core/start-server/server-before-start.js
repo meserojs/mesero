@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const create_router_1 = require("./create-router");
 function default_1(modules) {
     return __awaiter(this, void 0, void 0, function* () {
         const { interceptor } = modules;
+        modules.router = create_router_1.default(modules);
         for (let item of interceptor.serverBeforeStart) {
             yield item();
         }

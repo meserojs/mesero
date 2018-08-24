@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const get_config_1 = require("./common/get-config");
 const init_modules_1 = require("./init-modules");
 const start_server_1 = require("./start-server");
-const router_1 = require("./common/router");
 const util_1 = require("./common/util");
 class Mesero {
     constructor() {
@@ -26,9 +25,9 @@ class Mesero {
             service: this.service,
             interceptor: this.interceptor,
             logger: this.logger,
-            router: router_1.default,
             store: this.store,
             jwt: this.jwt,
+            router: this.router,
             util: this.util,
             io: this.io
         });

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const { Mesero, Model, Controller, Interceptor, Service, router, Middleware } = require('../dist')
+const { Mesero, Model, Controller, Interceptor, Service, Router, Middleware } = require('../dist')
 
 const { Table, Field, SQL, Method } = Model
 
@@ -31,8 +31,17 @@ class M {
 
 @Controller
 class C {
-  sayHello () {
-    return 'hello !'
+  helloWorld (ctx, next) {
+    ctx.body = 'hello world!'
+  }
+
+  hello (ctx, next) {
+    ctx.body = 'hello'
+    next()
+  }
+
+  world (ctx, next) {
+    ctx.body = ctx.body + ' world!'
   }
 }
 
@@ -71,55 +80,57 @@ class S {
   }
 }
 
-router.get('/', function (ctx, next) {
-  ctx.body = ctx.controller.C.sayHello()
-})
+Router.get('/').to(({ controller }) => controller.C.helloWorld)
+Router.get('/helloWorld').to(({ controller }) => [
+  controller.C.hello,
+  controller.C.world
+])
 
-router.all('/user/:id', async function (ctx, next) {
+Router.all('/user/:id').to(() => async function (ctx, next) {
   ctx.body = (await ctx.model.M.find({where: {id: ctx.params.id}})) || 'not found user'
 })
 
-router.post('/user', async function (ctx, next) {
+Router.post('/user').to(() => async function (ctx, next) {
   ctx.body = (await ctx.model.M.find({where: {id: ctx.request.body.id}})) || 'not found user'
 })
 
-router.get('/sql/1', async function (ctx, next) {
+Router.get('/sql/1').to(() => async function (ctx, next) {
   ctx.body = await ctx.model.M.SQL.findAll()
 })
 
-router.get('/sql/2', async function (ctx, next) {
+Router.get('/sql/2').to(() => async function (ctx, next) {
   const [ count, users ] = await Promise.all(ctx.model.M.SQL.findAllAndCount())
   ctx.body = {count, users}
 })
 
-router.all('/error', function (ctx, next) {
+Router.all('/error').to(() => function (ctx, next) {
   ctx.error('test error message')
   console.log('not run here')
 })
 
-router.get('/ejs', async function (ctx, next) {
+Router.get('/ejs').to(() => async function (ctx, next) {
   await ctx.render('a', {msg: ctx.controller.C.sayHello()})
 })
 
-router.get('/store', async function (ctx, next) {
+Router.get('/store').to(() => async function (ctx, next) {
   !ctx.store.code && (ctx.store.code = 0)
   ctx.body = ++ctx.store.code
 })
 
-router.get('/jwt/sign/:code', async function (ctx, next) {
+Router.get('/jwt/sign/:code').to(() => async function (ctx, next) {
   ctx.body = ctx.jwt.sign(ctx.params.code)
 })
 
-router.get('/jwt/verify/:token', async function (ctx, next) {
+Router.get('/jwt/verify/:token').to(() => async function (ctx, next) {
   ctx.body = ctx.jwt.verify(ctx.params.token)
 })
 
-router.get('/session', async function (ctx, next) {
+Router.get('/session').to(() => async function (ctx, next) {
   !ctx.session.code && (ctx.session.code = 0)
   ctx.body = ++ctx.session.code
 })
 
-router.get('/io', async function (ctx, next) {
+Router.get('/io').to(() => async function (ctx, next) {
   ctx.body = !!ctx.io
 })
 
