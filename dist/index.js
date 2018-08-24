@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const mesero_1 = require("./core/mesero");
 const model_1 = require("./core/decorators/model");
 const controller_1 = require("./core/decorators/controller");
@@ -16,4 +15,4 @@ const mesero = {
     router: router_1.default,
     Middleware: middleware_1.default
 };
-exports.default = mesero;
+module.exports = mesero;

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const { default: { Mesero, Model, Controller, Interceptor, Service, router, Middleware } } = require('../dist')
+const { Mesero, Model, Controller, Interceptor, Service, router, Middleware } = require('../dist')
 
 const { Table, Field, SQL, Method } = Model
 

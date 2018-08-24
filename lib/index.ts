@@ -16,4 +16,4 @@ const mesero: mesero = {
   Middleware
 }
 
-export default mesero
+export = mesero
