@@ -16,6 +16,4 @@ const mesero: mesero = {
   Router
 }
 
-console.log(module.parent && module.parent.filename)
-
 export = mesero

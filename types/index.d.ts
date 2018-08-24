@@ -57,6 +57,11 @@ declare class MiddlewareClass {
   add: (func: MiddlewarePlugin) => void
 }
 
+declare module 'auto-import-modules' {
+  function autoImportModules (...args: Array<any>): void
+  export = autoImportModules
+}
+
 interface MeseroConstructor {
   new (): MeseroClass
 }

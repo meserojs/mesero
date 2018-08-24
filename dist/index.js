@@ -15,5 +15,4 @@ const mesero = {
     Middleware: middleware_1.default,
     Router: router_1.Router
 };
-console.log(module.parent && module.parent.filename);
 module.exports = mesero;

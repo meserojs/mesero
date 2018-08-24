@@ -1,7 +1,9 @@
+import * as path from 'path'
 import getConfig from './common/get-config'
 import initModules from './init-modules'
 import startServer from './start-server'
 import util from './common/util'
+import autoImportModules = require('auto-import-modules')
 
 export default class Mesero implements MeseroClass {
   public config: MeseroConfig
@@ -43,5 +45,9 @@ export default class Mesero implements MeseroClass {
       util: this.util,
       io: this.io
     })
+  }
+
+  static AutoImportModules (): void {
+    module.parent && module.parent.filename && autoImportModules(path.parse(module.parent.filename).dir)
   }
 }

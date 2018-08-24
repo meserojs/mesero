@@ -81,6 +81,7 @@ class S {
 }
 
 Router.get('/').to(({ controller }) => controller.C.helloWorld)
+
 Router.get('/helloWorld').to(({ controller }) => [
   controller.C.hello,
   controller.C.world
