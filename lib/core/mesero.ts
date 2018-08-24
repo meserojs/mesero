@@ -6,6 +6,8 @@ import util from './common/util'
 import autoImportModules = require('auto-import-modules')
 
 export default class Mesero implements MeseroClass {
+  static moduleParentFilename: string = ''
+
   public config: MeseroConfig
   public logger: Logger
   public model: Model
@@ -48,6 +50,6 @@ export default class Mesero implements MeseroClass {
   }
 
   static AutoImportModules (): void {
-    module.parent && module.parent.filename && autoImportModules(path.parse(module.parent.filename).dir)
+    Mesero.moduleParentFilename && autoImportModules(path.parse(Mesero.moduleParentFilename).dir)
   }
 }

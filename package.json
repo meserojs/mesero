@@ -1,6 +1,6 @@
 {
   "name": "mesero",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.5",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {

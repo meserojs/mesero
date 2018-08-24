@@ -6,6 +6,7 @@ const interceptor_1 = require("./core/decorators/interceptor");
 const service_1 = require("./core/decorators/service");
 const router_1 = require("./core/common/router");
 const middleware_1 = require("./core/middleware");
+module.parent && module.parent.filename && (mesero_1.default.moduleParentFilename = module.parent.filename);
 const mesero = {
     Mesero: mesero_1.default,
     Model: model_1.Model,

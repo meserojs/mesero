@@ -6,6 +6,8 @@ import { Service } from './core/decorators/service'
 import { Router } from './core/common/router'
 import Middleware from './core/middleware'
 
+module.parent && module.parent.filename && (Mesero.moduleParentFilename = module.parent.filename)
+
 const mesero: mesero = {
   Mesero,
   Model,

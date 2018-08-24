@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const path = require("path");
 const get_config_1 = require("./common/get-config");
 const init_modules_1 = require("./init-modules");
 const start_server_1 = require("./start-server");
 const util_1 = require("./common/util");
-const autoImportModules = require("auto-import-modules");
 class Mesero {
     constructor() {
         this.store = {};
@@ -34,8 +32,10 @@ class Mesero {
             io: this.io
         });
     }
-    static autoImportModules() {
-        module.parent && module.parent.filename && autoImportModules(path.parse(module.parent.filename).dir);
+    static AutoImportModules() {
+        console.log(Mesero.moduleParentFilename);
+        // Mesero.moduleParentFilename && autoImportModules(path.parse(Mesero.moduleParentFilename).dir)
     }
 }
+Mesero.moduleParentFilename = '';
 exports.default = Mesero;
