@@ -5,7 +5,7 @@ import initService from './3-init-service'
 import initInterceptor from './4-init-interceptor'
 import initJWT from './5-init-jwt'
 
-export default (config: MeseroConfig): initModules => ({
+export default (config: NasoConfig): initModules => ({
   logger: initLogger(config),
   model: initModel(config),
   controller: initController(config),

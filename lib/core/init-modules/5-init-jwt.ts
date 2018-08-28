@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as jwt from 'jsonwebtoken'
 
-export default function (config: MeseroConfig): undefined | JWT {
+export default function (config: NasoConfig): undefined | JWT {
   if (!config.jwt) {
     return undefined
   }

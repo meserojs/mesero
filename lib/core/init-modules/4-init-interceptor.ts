@@ -1,6 +1,6 @@
 import { queue } from '../decorators/interceptor'
 
-export default (config: MeseroConfig): Interceptor => {
+export default (config: NasoConfig): Interceptor => {
   const interceptor: Interceptor = {
     serverBeforeStart: [],
     serverStarted: []

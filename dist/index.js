@@ -1,14 +1,14 @@
 "use strict";
-const mesero_1 = require("./core/mesero");
+const naso_1 = require("./core/naso");
 const model_1 = require("./core/decorators/model");
 const controller_1 = require("./core/decorators/controller");
 const interceptor_1 = require("./core/decorators/interceptor");
 const service_1 = require("./core/decorators/service");
 const router_1 = require("./core/common/router");
 const middleware_1 = require("./core/middleware");
-module.parent && module.parent.filename && (mesero_1.default.moduleParentFilename = module.parent.filename);
-const mesero = {
-    Mesero: mesero_1.default,
+module.parent && module.parent.filename && (naso_1.default.moduleParentFilename = module.parent.filename);
+const naso = {
+    Naso: naso_1.default,
     Model: model_1.Model,
     Controller: controller_1.Controller,
     Interceptor: interceptor_1.Interceptor,
@@ -16,4 +16,4 @@ const mesero = {
     Middleware: middleware_1.default,
     Router: router_1.Router
 };
-module.exports = mesero;
+module.exports = naso;

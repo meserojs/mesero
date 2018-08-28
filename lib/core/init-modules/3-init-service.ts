@@ -1,6 +1,6 @@
 import { queue } from '../decorators/service'
 
-export default (config: MeseroConfig): Service => {
+export default (config: NasoConfig): Service => {
   const service: Service = {}
 
   for (let item of queue) {

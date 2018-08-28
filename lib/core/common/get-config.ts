@@ -4,10 +4,10 @@ import * as path from 'path'
 import * as _ from 'lodash'
 import * as glob from 'glob'
 
-export default function (): MeseroConfig {
+export default function (): NasoConfig {
   const rootDir: string = process.cwd()
 
-  let config: MeseroConfig = {
+  let config: NasoConfig = {
     rootDir,
     port: 8080,
     env: 'production',
@@ -19,18 +19,18 @@ export default function (): MeseroConfig {
   }
 
   // base config
-  const CONFIG_YML_NAME: string = 'mesero.yml'
+  const CONFIG_YML_NAME: string = 'naso.yml'
   const CONFIG_YML_PATH: string = path.resolve(rootDir, CONFIG_YML_NAME)
 
   let ymlConfig: object = fs.existsSync(CONFIG_YML_PATH) && (YAML.parse(fs.readFileSync(CONFIG_YML_PATH, 'utf8')) || {})
 
   // env config
-  let envConfig: MeseroEnvConfig = {}
+  let envConfig: NasoEnvConfig = {}
 
-  const envConfigYmlFiles: Array<string> = glob.sync(path.resolve(rootDir, 'mesero.*.yml'))
+  const envConfigYmlFiles: Array<string> = glob.sync(path.resolve(rootDir, 'naso.*.yml'))
 
   for (let item of envConfigYmlFiles) {
-    const nameMatchArray: RegExpExecArray | null = /mesero\.(\S+)\.yml/.exec(item)
+    const nameMatchArray: RegExpExecArray | null = /naso\.(\S+)\.yml/.exec(item)
 
     if (nameMatchArray && nameMatchArray[1]) {
       envConfig[nameMatchArray[1]] = YAML.parse(fs.readFileSync(item, 'utf8')) || {}

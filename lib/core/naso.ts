@@ -5,10 +5,10 @@ import startServer from './start-server'
 import util from './common/util'
 import autoImportModules = require('auto-import-modules')
 
-export default class Mesero implements MeseroClass {
+export default class Naso implements NasoClass {
   static moduleParentFilename: string = ''
 
-  public config: MeseroConfig
+  public config: NasoConfig
   public logger: Logger
   public model: Model
   public controller: Controller
@@ -50,6 +50,6 @@ export default class Mesero implements MeseroClass {
   }
 
   static AutoImportModules (): void {
-    Mesero.moduleParentFilename && autoImportModules(path.parse(Mesero.moduleParentFilename).dir)
+    Naso.moduleParentFilename && autoImportModules(path.parse(Naso.moduleParentFilename).dir)
   }
 }

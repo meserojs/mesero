@@ -18,14 +18,14 @@ function default_1() {
         }
     };
     // base config
-    const CONFIG_YML_NAME = 'mesero.yml';
+    const CONFIG_YML_NAME = 'naso.yml';
     const CONFIG_YML_PATH = path.resolve(rootDir, CONFIG_YML_NAME);
     let ymlConfig = fs.existsSync(CONFIG_YML_PATH) && (YAML.parse(fs.readFileSync(CONFIG_YML_PATH, 'utf8')) || {});
     // env config
     let envConfig = {};
-    const envConfigYmlFiles = glob.sync(path.resolve(rootDir, 'mesero.*.yml'));
+    const envConfigYmlFiles = glob.sync(path.resolve(rootDir, 'naso.*.yml'));
     for (let item of envConfigYmlFiles) {
-        const nameMatchArray = /mesero\.(\S+)\.yml/.exec(item);
+        const nameMatchArray = /naso\.(\S+)\.yml/.exec(item);
         if (nameMatchArray && nameMatchArray[1]) {
             envConfig[nameMatchArray[1]] = YAML.parse(fs.readFileSync(item, 'utf8')) || {};
         }

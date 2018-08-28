@@ -1,4 +1,4 @@
-import Mesero from './core/mesero'
+import Naso from './core/naso'
 import { Model } from './core/decorators/model'
 import { Controller } from './core/decorators/controller'
 import { Interceptor } from './core/decorators/interceptor'
@@ -6,10 +6,10 @@ import { Service } from './core/decorators/service'
 import { Router } from './core/common/router'
 import Middleware from './core/middleware'
 
-module.parent && module.parent.filename && (Mesero.moduleParentFilename = module.parent.filename)
+module.parent && module.parent.filename && (Naso.moduleParentFilename = module.parent.filename)
 
-const mesero: mesero = {
-  Mesero,
+const naso: naso = {
+  Naso,
   Model,
   Controller,
   Interceptor,
@@ -18,4 +18,4 @@ const mesero: mesero = {
   Router
 }
 
-export = mesero
+export = naso

@@ -1,6 +1,6 @@
 import { queue } from '../decorators/controller'
 
-export default (config: MeseroConfig): Controller => {
+export default (config: NasoConfig): Controller => {
   const controller: Controller = {}
 
   for (let item of queue) {

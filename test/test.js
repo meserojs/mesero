@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const { Mesero, Model, Controller, Interceptor, Service, Router, Middleware } = require('../dist')
+const { Naso, Model, Controller, Interceptor, Service, Router, Middleware } = require('../dist')
 
 const { Table, Field, SQL, Method } = Model
 
@@ -142,6 +142,6 @@ Middleware.add((app, config) => async (ctx, next) => {
 
 Middleware.add((app, config) => console.log('middle ware 2'))
 
-const mesero = new Mesero()
+const naso = new Naso()
 
-mesero.start()
+naso.start()

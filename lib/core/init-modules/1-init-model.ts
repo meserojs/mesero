@@ -2,7 +2,7 @@ import * as Sequelize from 'sequelize'
 
 import { queue } from '../decorators/model'
 
-export default (config: MeseroConfig): Model => {
+export default (config: NasoConfig): Model => {
   if (!config.mysql) {
     return {}
   }

@@ -35,7 +35,7 @@ declare module 'boxen' {
 }
 
 interface ServerModules {
-  config: MeseroConfig
+  config: NasoConfig
   model: Model
   controller: Controller
   service: Service
@@ -62,17 +62,17 @@ declare module 'auto-import-modules' {
   export = autoImportModules
 }
 
-interface MeseroConstructor {
-  new (): MeseroClass
+interface NasoConstructor {
+  new (): NasoClass
 }
 
-interface MeseroClass {
-  config: MeseroConfig
+interface NasoClass {
+  config: NasoConfig
   start: () => void
 }
 
-interface mesero {
-  Mesero: MeseroConstructor
+interface naso {
+  Naso: NasoConstructor
   Model: ModelDecorator
   Controller: ControllerDecorator
   Interceptor: InterceptorDecorator

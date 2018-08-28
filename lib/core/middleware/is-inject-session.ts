@@ -4,7 +4,7 @@ const isInjectSession: MiddlewarePlugin = function (app, modules) {
   const { config } = modules
 
   if (config.session) {
-    const key: string = config.session.key || 'mesero'
+    const key: string = config.session.key || 'naso'
 
     app.keys = [key]
 

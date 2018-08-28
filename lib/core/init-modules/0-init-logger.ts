@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import * as winston from 'winston'
 import * as moment from 'moment'
 
-export default function (config: MeseroConfig): Logger {
+export default function (config: NasoConfig): Logger {
   if (config.env.indexOf('dev') === 0 || config.env === 'debug') {
     return {
       info: (msg) => { console.info(msg) },

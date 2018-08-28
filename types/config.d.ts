@@ -30,7 +30,7 @@ interface dirConfig {
   view: string
 }
 
-interface MeseroConfig {
+interface NasoConfig {
   rootDir: string
   port: number
   env: string
@@ -42,6 +42,6 @@ interface MeseroConfig {
   dir: dirConfig
 }
 
-interface MeseroEnvConfig {
+interface NasoEnvConfig {
   [env: string]: object
 }
