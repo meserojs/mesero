@@ -11,6 +11,7 @@ const Router = new Proxy({}, {
                     Array.isArray(url) ? url.forEach(item => {
                         routes[key][item] = joiner;
                     }) : routes[key][url] = joiner;
+                    return Router;
                 }
             };
         };

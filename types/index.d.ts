@@ -54,7 +54,7 @@ interface MiddlewarePlugin {
 
 declare class MiddlewareClass {
   queue: Array<MiddlewarePlugin>
-  add: (func: MiddlewarePlugin) => void
+  add: (func: MiddlewarePlugin) => MiddlewareClass
 }
 
 declare module 'auto-import-modules' {

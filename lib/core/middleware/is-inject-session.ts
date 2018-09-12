@@ -8,7 +8,7 @@ const isInjectSession: MiddlewarePlugin = function (app, modules) {
 
     app.keys = [key]
 
-    return KoaSession({key, maxAge: config.session.maxAge || 24 * 60 * 60 * 1000}, app)
+    return KoaSession({ key, maxAge: config.session.maxAge || 24 * 60 * 60 * 1000 }, app)
   }
 }
 

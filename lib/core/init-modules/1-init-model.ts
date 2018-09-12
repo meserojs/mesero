@@ -46,7 +46,7 @@ export default (config: NasoConfig): Model => {
       continue
     }
 
-    const modelItem: any = dbItem.define(table, field, {freezeTableName: true, timestamps: false})
+    const modelItem: any = dbItem.define(table, field, { freezeTableName: true, timestamps: false })
 
     // add method into model
     modelItem.Methods = {}
@@ -64,7 +64,7 @@ export default (config: NasoConfig): Model => {
 
         const querySqlStatement = (item: string) => {
           if (item.toUpperCase().indexOf('SELECT') === 0) {
-            return dbItem.query(item, {type: dbItem.QueryTypes.SELECT})
+            return dbItem.query(item, { type: dbItem.QueryTypes.SELECT })
           }
 
           return dbItem.query(item)

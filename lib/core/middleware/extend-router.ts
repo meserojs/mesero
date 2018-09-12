@@ -1,4 +1,4 @@
-const CTX_ERROR_FLAG = '[ctx@error]'
+const CTX_ERROR_FLAG = '[ctx.error]'
 
 const extendRouter: MiddlewarePlugin = function (app, modules) {
   const { config, logger } = modules
@@ -25,7 +25,7 @@ const extendRouter: MiddlewarePlugin = function (app, modules) {
       await next()
     } catch (error) {
       if (typeof error === 'string' && error.indexOf(CTX_ERROR_FLAG) === 0) {
-        ctx.body = {error: error.split(CTX_ERROR_FLAG)[1]}
+        ctx.body = { error: error.split(CTX_ERROR_FLAG)[1] }
       } else {
         console.log(error) && logger.error(error)
       }

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CTX_ERROR_FLAG = '[ctx@error]';
+const CTX_ERROR_FLAG = '[ctx.error]';
 const extendRouter = function (app, modules) {
     const { config, logger } = modules;
     return (ctx, next) => __awaiter(this, void 0, void 0, function* () {
